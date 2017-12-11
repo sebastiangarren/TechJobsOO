@@ -12,17 +12,16 @@ namespace TechJobs.Controllers
 
         // Our reference to the data store
         private static JobData jobData;
+        private Employer EmployerForJob;
+        private Location LocationForJob;
+        private CoreCompetency CoreCompetencyForJob;
+        private PositionType PositionTypeForJob;
 
 
         static JobController()
         {
             jobData = JobData.GetInstance();
         }
-
-        public PositionType PositionTypeForJob { get; set; }
-        public CoreCompetency CoreCompetencyForJob { get; set; }
-        public Location LocationForJob { get; set; }
-        public Employer EmployerForJob { get; set; }
 
 
 
@@ -62,7 +61,7 @@ namespace TechJobs.Controllers
                 {
                     if (newJobViewModel.EmployerID == JobProperty.ID)
                     {
-                        Employer EmployerForJob = JobProperty;
+                        EmployerForJob = JobProperty;
                     }
                 }
 
@@ -70,7 +69,7 @@ namespace TechJobs.Controllers
                 {
                     if (newJobViewModel.Location == JobProperty.ID)
                     {
-                        Location LocationForJob = JobProperty;
+                        LocationForJob = JobProperty;
                     }
                 }
 
@@ -78,7 +77,7 @@ namespace TechJobs.Controllers
                 {
                     if (newJobViewModel.CoreCompetency == JobProperty.ID)
                     {
-                        CoreCompetency CoreCompetencyForJob = JobProperty;
+                        CoreCompetencyForJob = JobProperty;
                     }
                 }
 
@@ -86,7 +85,7 @@ namespace TechJobs.Controllers
                 {
                     if (newJobViewModel.PositionType == JobProperty.ID)
                     {
-                        PositionType PositionTypeForJob = JobProperty;
+                        PositionTypeForJob = JobProperty;
                     }
                 }
 
@@ -100,9 +99,10 @@ namespace TechJobs.Controllers
                     PositionType = PositionTypeForJob,
                 };
 
-                
+                jobData.Jobs.Add(newJob);
+                string newUrl = "/Job?id=" + newJob.ID.ToString();
 
-                return RedirectToAction("Job", new { id = newJob.ID});
+                return Redirect(newUrl);
             }            
 
 
